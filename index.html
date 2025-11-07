@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Психология личности | Многофакторный анализ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #0c0b1d;
+            --secondary: #1a1835;
+            --accent-1: #6a4cff;
+            --accent-2: #ff4c8d;
+            --accent-3: #4cdbff;
+            --accent-4: #ffb84c;
+            --text: #f0f0f5;
+            --text-secondary: #b8b8d0;
+            --card-bg: rgba(26, 24, 53, 0.8);
+            --border: rgba(106, 76, 255, 0.3);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            --gradient-1: linear-gradient(135deg, #6a4cff, #4cdbff);
+            --gradient-2: linear-gradient(135deg, #ff4c8d, #ffb84c);
+            --gradient-3: linear-gradient(135deg, #4cdbff, #6a4cff);
+            --gradient-4: linear-gradient(135deg, #ffb84c, #ff4c8d);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 5% 10%, rgba(106, 76, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 95% 20%, rgba(255, 76, 141, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 90%, rgba(76, 219, 255, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(12, 11, 29, 0.95);
+            backdrop-filter: blur(15px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-left: 5px;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient-1);
+            transition: width 0.5s ease;
+            border-radius: 2px;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 2.5rem;
+            position: relative;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: var(--accent-1);
+        }
+
+        nav a.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 0 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            filter: blur(40px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            left: 80%;
+            background: var(--gradient-2);
+            animation-delay: 5s;
+        }
+
+        .shape-3 {
+            width: 250px;
+            height: 250px;
+            top: 80%;
+            left: 10%;
+            background: var(--gradient-3);
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            33% { transform: translate(30px, -50px) rotate(120deg) scale(1.1); }
+            66% { transform: translate(-20px, 20px) rotate(240deg) scale(0.9); }
+            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShine 5s ease-in-out infinite alternate;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        @keyframes textShine {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: var(--text-secondary);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--gradient-1);
+            color: var(--text);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(106, 76, 255, 0.4);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-2);
+            z-index: -1;
+            transition: opacity 0.4s;
+            opacity: 0;
+            border-radius: 50px;
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(106, 76, 255, 0.5);
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            padding: 6rem 0;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 5px;
+            background: var(--gradient-1);
+            margin: 1rem auto;
+            border-radius: 3px;
+            animation: linePulse 2s infinite;
+        }
+
+        @keyframes linePulse {
+            0% { transform: scaleX(1); }
+            50% { transform: scaleX(1.2); }
+            100% { transform: scaleX(1); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-1);
+            transition: width 0.4s;
+        }
+
+        .card:hover::before {
+            width: 10px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h3 {
+            color: var(--accent-3);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        /* Psychology Elements */
+        .psychology-element {
+            width: 100%;
+            height: 200px;
+            border-radius: 15px;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: transform 0.4s;
+        }
+
+        .psychology-element:hover {
+            transform: scale(1.03);
+        }
+
+        .psychology-element::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            z-index: 1;
+        }
+
+        .psychology-element span {
+            position: relative;
+            z-index: 2;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 5rem;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent-3);
+            position: relative;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .content-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: var(--gradient-2);
+            border-radius: 2px;
+        }
+
+        .content-section p {
+            margin-bottom: 1.8rem;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 2rem;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .content-section li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+
+        .content-section li::before {
+            content: '▸';
+            color: var(--accent-1);
+            font-weight: bold;
+            position: absolute;
+            left: -1.2rem;
+        }
+
+        .highlight {
+            background: rgba(106, 76, 255, 0.1);
+            border-left: 5px solid var(--accent-1);
+            padding: 2rem;
+            margin: 2.5rem 0;
+            border-radius: 0 15px 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(106, 76, 255, 0.05), transparent);
+            z-index: -1;
+        }
+
+        /* Charts */
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--accent-3);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Test Section */
+        .test-question {
+            margin-bottom: 2.5rem;
+        }
+
+        .test-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .test-options label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(106, 76, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .test-options label:hover {
+            background: rgba(106, 76, 255, 0.2);
+            border-color: var(--accent-1);
+        }
+
+        .test-options input {
+            margin-right: 1rem;
+            transform: scale(1.2);
+        }
+
+        .test-result {
+            text-align: center;
+            padding: 3rem;
+            background: var(--gradient-1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .result-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .result-description {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            padding: 4rem 0;
+            margin-top: 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(106, 76, 255, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-1);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: var(--gradient-1);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Research Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--gradient-1);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            padding: 1.5rem;
+            position: relative;
+            width: 50%;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .timeline-year {
+            position: absolute;
+            top: 1.5rem;
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 0 0 4px var(--primary);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-year {
+            right: -40px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-year {
+            left: -40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 0;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-year {
+                left: -40px !important;
+                right: auto !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 1.5rem;
+                flex-direction: column;
+            }
+
+            nav li {
+                margin: 0.8rem 0;
+            }
+
+            .hero {
+                padding: 8rem 0 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 1.2rem;
+                right: 1rem;
+            }
+
+            .mobile-nav {
+                display: none;
+                width: 100%;
+                text-align: center;
+                background: var(--secondary);
+                padding: 1rem 0;
+                margin-top: 1rem;
+                border-radius: 10px;
+            }
+
+            .mobile-nav.active {
+                display: block;
+            }
+            
+            .content-section h2 {
+                font-size: 2rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Floating background elements -->
+    <div class="hero-bg">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Психология<span>Личности</span></a>
+                <button class="mobile-menu-btn">☰</button>
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-page="home">Главная</a></li>
+                        <li><a href="#" class="nav-link" data-page="theory">Теории</a></li>
+                        <li><a href="#" class="nav-link" data-page="types">Типологии</a></li>
+                        <li><a href="#" class="nav-link" data-page="research">Исследования</a></li>
+                        <li><a href="#" class="nav-link" data-page="test">Тестирование</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Главная страница -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <div class="container">
+                    <h1>Многофакторный анализ личности</h1>
+                    <p>Исследуйте глубины человеческой психики через призму современных психологических теорий и научных подходов к пониманию личности.</p>
+                    <a href="#" class="btn nav-link" data-page="theory">Начать изучение</a>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="content-section">
+                    <h2>Что такое психология личности?</h2>
+                    <p>Психология личности — это раздел психологии, изучающий личность и индивидуальные различия. Основное внимание в этой области направлено на понимание того, как люди думают, чувствуют и ведут себя в различных ситуациях, а также на выявление устойчивых паттернов, которые определяют индивидуальность каждого человека.</p>
+                    
+                    <div class="highlight">
+                        <p>Личность представляет собой динамическую организацию тех психофизических систем внутри индивида, которые определяют его уникальное приспособление к окружающей среде. - Гордон Олпорт</p>
+                    </div>
+                    
+                    <p>Исследования в области психологии личности охватывают широкий спектр тем: от биологических основ поведения до социальных и культурных влияний. Современные подходы рассматривают личность как сложную, многогранную систему, находящуюся в постоянном развитии и взаимодействии с окружающей средой.</p>
+                </div>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>Структура личности</h3>
+                        <p>Личность состоит из множества взаимосвязанных компонентов: темперамента, характера, способностей, мотивации, ценностей и установок.</p>
+                        <div class="psychology-element" style="background: var(--gradient-1);">
+                            <span>Структурный анализ</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Динамика развития</h3>
+                        <p>Личность не является статичным образованием — она развивается и изменяется на протяжении всей жизни под влиянием различных факторов.</p>
+                        <div class="psychology-element" style="background: var(--gradient-2);">
+                            <span>Динамика развития</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Индивидуальные различия</h3>
+                        <p>Каждый человек обладает уникальным сочетанием личностных черт, которые определяют его поведение и взаимодействие с миром.</p>
+                        <div class="psychology-element" style="background: var(--gradient-3);">
+                            <span>Индивидуальность</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Страница теорий -->
+        <section id="theory" class="page">
+            <div class="container">
+                <h2 class="section-title">Основные теории личности</h2>
+                
+                <div class="content-section">
+                    <h2>Психоаналитическая теория Зигмунда Фрейда</h2>
+                    <p>Психоаналитическая теория, разработанная Зигмундом Фрейдом, представляет одну из первых и наиболее влиятельных систем взглядов на личность. Согласно Фрейду, личность состоит из трех основных структур: Ид (Оно), Эго (Я) и Суперэго (Сверх-Я).</p>
+                    
+                    <div class="chart-container">
+                        <div class="chart-title">Структура личности по Фрейду</div>
+                        <canvas id="freudChart"></canvas>
+                    </div>
+                    
+                    <h3>Ключевые концепции психоанализа:</h3>
+                    <ul>
+                        <li><strong>Бессознательное</strong> — vast хранилище мыслей, желаний и воспоминаний, находящихся за пределами осознания, но влияющих на поведение</li>
+                        <li><strong>Психосексуальные стадии развития</strong> — оральная, анальная, фаллическая, латентная и генитальная стадии, через которые проходит ребенок</li>
+                        <li><strong>Защитные механизмы Эго</strong> — бессознательные стратегии, используемые для снижения тревоги и защиты от внутренних конфликтов</li>
+                        <li><strong>Толкование сновидений</strong> — метод доступа к бессознательному через анализ символов и содержания снов</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <p>Фрейд сравнивал человеческую психику с айсбергом, где сознание представляет лишь небольшую видимую часть, в то время как бессознательное составляет его основную, скрытую массу.</p>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h2>Бихевиоризм и теория социального научения</h2>
+                    <p>Бихевиористский подход, представленный работами Джона Уотсона и Б.Ф. Скиннера, фокусируется на observable поведении и влиянии окружающей среды на его формирование. В отличие от психоанализа, бихевиористы отвергают изучение внутренних психических процессов.</p>
+                    
+                    <h3>Основные принципы бихевиоризма:</h3>
+                    <ul>
+                        <li><strong>Классическое обусловливание</strong> (Павлов, Уотсон) — процесс научения через ассоциации между стимулами</li>
+                        <li><strong>Оперантное обусловливание</strong> (Скиннер) — научение через последствия поведения (подкрепление и наказание)</li>
+                        <li><strong>Теория социального научения</strong> (Бандура) — emphasizes роль наблюдения и имитации в приобретении новых поведенческих паттернов</li>
+                    </ul>
+                    
+                    <p>Альберт Бандура расширил бихевиористский подход, введя когнитивные факторы в объяснение поведения. Его теория социального научения подчеркивает, что люди учатся не только через непосредственный опыт, но и через наблюдение за другими (моделирование) и ожидание последствий.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2>Гуманистическая психология</h2>
+                    <p>Гуманистическая психология, представленная работами Абрахама Маслоу и Карла Роджерса, emerged как "третья сила" в психологии в противовес психоанализу и бихевиоризму. Этот подход акцентирует внимание на человеческом потенциале, свободной воле и стремлении к самоактуализации.</p>
+                    
+                    <div class="chart-container">
+                        <div class="chart-title">Пирамида потребностей Маслоу</div>
+                        <canvas id="maslowChart"></canvas>
+                    </div>
+                    
+                    <h3>Ключевые концепции гуманистической психологии:</h3>
+                    <ul>
+                        <li><strong>Самоактуализация</strong> — врожденное стремление человека к реализации своего потенциала</li>
+                        <li><strong>Иерархия потребностей</strong> (Маслоу) — pyramid человеческих потребностей от базовых физиологических до высших духовных</li>
+                        <li><strong>Личностно-центрированный подход</strong> (Роджерс) — терапевтический метод, основанный на безусловном позитивном regard, эмпатии и конгруэнтности</li>
+                        <li><strong>Экзистенциальная психология</strong> — focuses на таких фундаментальных вопросах, как смысл жизни, свобода, ответственность и смерть</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <p>Гуманистические психологи рассматривают человека как активного, творческого субъекта, способного к сознательному выбору и личностному росту, а не как пассивный продукт биологических drives или environmental conditioning.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Страница типологий -->
+        <section id="types" class="page">
+            <div class="container">
+                <h2 class="section-title">Типологии личности</h2>
+                
+                <div class="content-section">
+                    <h2>Пятифакторная модель личности (Big Five)</h2>
+                    <p>Пятифакторная модель, также известная как модель "Большой пятерки", в настоящее время является доминирующим подходом в исследовании личности. Эта модель идентифицирует пять основных dimensions личности, которые охватывают большинство индивидуальных различий.</p>
+                    
+                    <div class="chart-container">
+                        <div class="chart-title">Факторы модели Big Five</div>
+                        <canvas id="bigFiveChart"></canvas>
+                    </div>
+                    
+                    <h3>Пять основных факторов:</h3>
+                    <ul>
+                        <li><strong>Открытость опыту (Openness)</strong> — характеризует воображение, любознательность, оригинальность и широкий круг интересов</li>
+                        <li><strong>Добросовестность (Conscientiousness)</strong> — отражает организованность, ответственность, надежность и целеустремленность</li>
+                        <li><strong>Экстраверсия (Extraversion)</strong> — описывает общительность, assertiveness, активность и позитивные эмоции</li>
+                        <li><strong>Доброжелательность (Agreeableness)</strong> — включает такие качества как доверие, альтруизм, сотрудничество и скромность</li>
+                        <li><strong>Нейротизм (Neuroticism)</strong> — характеризует тревожность, гнев, депрессию, уязвимость и impulsiveness</li>
+                    </ul>
+                    
+                    <p>Каждый фактор представляет собой континуум между двумя крайностями, и каждый человек располагается где-то along этого континуума. Модель Big Five имеет robust эмпирическую поддержку и демонстрирует cross-cultural валидность.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2>Типология Майерс-Бриггс (MBTI)</h2>
+                    <p>Типологический подход Майерс-Бриггс, основанный на теории психологических типов Карла Юнга, categorizes людей into 16 различных personality types на основе четырех dichotomies.</p>
+                    
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>Экстраверсия (E) vs Интроверсия (I)</h3>
+                            <p>Отражает направленность внимания и источник энергии — вовне или внутри себя.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Сенсорика (S) vs Интуиция (N)</h3>
+                            <p>Описывает способ восприятия информации — через конкретные факты или через patterns и возможности.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Мышление (T) vs Чувство (F)</h3>
+                            <p>Определяет способ принятия решений — на основе логики и объективности или на основе ценностей и гармонии.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Суждение (J) vs Восприятие (P)</h3>
+                            <p>Характеризует образ жизни — структурированный и planned или гибкий и spontaneous.</p>
+                        </div>
+                    </div>
+                    
+                    <p>Несмотря на популярность MBTI в бизнес-среде и самопознании, научное сообщество критикует эту типологию за недостаточную психометрическую валидность и надежность. В отличие от модели Big Five, MBTI categorizes людей into discrete types, тогда как большинство личностных характеристик распределены continuously.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2>Темперамент и его типы</h2>
+                    <p>Концепция темперамента, восходящая к Гиппократу и Галену, представляет собой биологически обусловленную основу личности, проявляющуюся в энергетическом уровне, эмоциональности и стиле поведения.</p>
+                    
+                    <div class="chart-container">
+                        <div class="chart-title">Четыре типа темперамента</div>
+                        <canvas id="temperamentChart"></canvas>
+                    </div>
+                    
+                    <h3>Классические типы темперамента:</h3>
+                    <ul>
+                        <li><strong>Сангвиник</strong> — активный, энергичный, общительный, оптимистичный, но может быть поверхностным и непостоянным</li>
+                        <li><strong>Холерик</strong> — passionate, целеустремленный, лидерский, но может быть вспыльчивым и агрессивным</li>
+                        <li><strong>Флегматик</strong> — спокойный, надежный, миролюбивый, но может быть пассивным и медлительным</li>
+                        <li><strong>Меланхолик</strong> — глубокий, вдумчивый, перфекционист, но может быть тревожным и пессимистичным</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <p>Современные исследования показывают, что темперамент имеет strong биологическую основу и проявляется уже в раннем детстве, предшествуя формированию character и личности в целом.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Страница исследований -->
+        <section id="research" class="page">
+            <div class="container">
+                <h2 class="section-title">Современные исследования</h2>
+                
+                <div class="content-section">
+                    <h2>Нейробиология личности</h2>
+                    <p>Современные исследования в области нейробиологии личности направлены на выявление биологических основ индивидуальных различий. Ученые изучают связь между структурой и функцией мозга и различными аспектами личности.</p>
+                    
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>Генетические факторы</h3>
+                            <p>Исследования близнецов показывают, что около 40-60% вариативности личностных черт обусловлено генетическими факторами.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Нейротрансмиттеры</h3>
+                            <p>Дофамин, серотонин и норадреналин играют ключевую роль в формировании таких черт, как экстраверсия, нейротизм и поиск новизны.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Структура мозга</h3>
+                            <p>Объем префронтальной коры, миндалевидного тела и других регионов мозга коррелирует с определенными личностными характеристиками.</p>
+                        </div>
+                    </div>
+                    
+                    <p>Современные методы нейровизуализации, такие как фМРТ и ПЭТ, позволяют исследователям изучать активность мозга в реальном времени и связывать ее с индивидуальными различиями в поведении и эмоциональных реакциях.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2>Кросс-культурные исследования</h2>
+                    <p>Кросс-культурные исследования личности направлены на выявление универсальных и культурно-специфических аспектов личности. Эти исследования помогают понять, какие черты личности являются общими для всех культур, а какие формируются под влиянием конкретных социальных и культурных условий.</p>
+                    
+                    <div class="highlight">
+                        <p>Пятифакторная модель личности демонстрирует удивительную кросс-культурную валидность, что свидетельствует о существовании универсальных измерений личности, общих для различных культур и обществ.</p>
+                    </div>
+                    
+                    <p>Однако исследования также выявляют культурные различия в выраженности certain черт. Например, коллективистские культуры tend to value доброжелательность и гармонию, тогда как индивидуалистические культуры often emphasize самостоятельность и достижения.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2>Историческое развитие исследований личности</h2>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">1890</div>
+                            <div class="timeline-content">
+                                <h3>Начало научного изучения</h3>
+                                <p>Уильям Джеймс публикует "Принципы психологии", закладывая основы научного изучения личности и сознания.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-year">1920</div>
+                            <div class="timeline-content">
+                                <h3>Психоаналитическая революция</h3>
+                                <p>Зигмунд Фрейд развивает психоаналитическую теорию личности, вводя концепции бессознательного, защитных механизмов и психосексуального развития.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-year">1950</div>
+                            <div class="timeline-content">
+                                <h3>Гуманистический подход</h3>
+                                <p>Абрахам Маслоу и Карл Роджерс развивают гуманистическую психологию, акцентируя внимание на самоактуализации и личностном росте.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-year">1980</div>
+                            <div class="timeline-content">
+                                <h3>Когнитивная революция</h3>
+                                <p>Исследования смещаются в сторону когнитивных процессов, лежащих в основе личности, и их нейробиологических основ.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-year">2000</div>
+                            <div class="timeline-content">
+                                <h3>Интегративный подход</h3>
+                                <p>Современные исследования объединяют биологические, когнитивные, социальные и культурные аспекты в целостное понимание личности.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Страница тестирования -->
+        <section id="test" class="page">
+            <div class="container">
+                <h2 class="section-title">Тестирование личности</h2>
+                
+                <div class="content-section">
+                    <h2>Определите ваш психологический профиль</h2>
+                    <p>Пройдите наш адаптированный тест, основанный на пятифакторной модели личности, чтобы лучше понять свои сильные стороны и области для развития.</p>
+                    
+                    <div class="card">
+                        <div class="test-question">
+                            <h3>Вопрос 1: Как вы обычно реагируете на новые ситуации?</h3>
+                            <div class="test-options">
+                                <label><input type="radio" name="q1" value="O"> С интересом и любопытством, ищу новые возможности</label>
+                                <label><input type="radio" name="q1" value="C"> Осторожно, предпочитаю тщательно все обдумать</label>
+                                <label><input type="radio" name="q1" value="E"> С энтузиазмом, сразу вовлекаюсь в процесс</label>
+                                <label><input type="radio" name="q1" value="A"> Смотрю, как реагируют другие, стараюсь поддерживать гармонию</label>
+                            </div>
+                        </div>
+                        
+                        <div class="test-question">
+                            <h3>Вопрос 2: Как вы организуете свою работу и повседневные дела?</h3>
+                            <div class="test-options">
+                                <label><input type="radio" name="q2" value="C"> Составляю подробные планы и строго их придерживаюсь</label>
+                                <label><input type="radio" name="q2" value="O"> Импровизирую, оставляю пространство для творчества</label>
+                                <label><input type="radio" name="q2" value="A"> Стараюсь учитывать интересы всех участников</label>
+                                <label><input type="radio" name="q2" value="N"> Часто откладываю дела, испытываю стресс от дедлайнов</label>
+                            </div>
+                        </div>
+                        
+                        <div class="test-question">
+                            <h3>Вопрос 3: Как вы ведете себя в компании?</h3>
+                            <div class="test-options">
+                                <label><input type="radio" name="q3" value="E"> Активно общаюсь, легко знакомлюсь с новыми людьми</label>
+                                <label><input type="radio" name="q3" value="A"> Стараюсь быть внимательным к другим, избегаю конфликтов</label>
+                                <label><input type="radio" name="q3" value="O"> Обсуждаю интересные идеи и теории</label>
+                                <label><input type="radio" name="q3" value="N"> Чувствую себя неловко, предпочитаю слушать, а не говорить</label>
+                            </div>
+                        </div>
+                        
+                        <div class="test-question">
+                            <h3>Вопрос 4: Как вы принимаете важные решения?</h3>
+                            <div class="test-options">
+                                <label><input type="radio" name="q4" value="C"> Анализирую все факты, составляю списки плюсов и минусов</label>
+                                <label><input type="radio" name="q4" value="A"> Советуюсь с близкими, учитываю их мнение</label>
+                                <label><input type="radio" name="q4" value="O"> Руководствуюсь интуицией, ищу нестандартные решения</label>
+                                <label><input type="radio" name="q4" value="N"> Долго колеблюсь, беспокоюсь о возможных негативных последствиях</label>
+                            </div>
+                        </div>
+                        
+                        <div class="test-question">
+                            <h3>Вопрос 5: Как вы справляетесь со стрессом?</h3>
+                            <div class="test-options">
+                                <label><input type="radio" name="q5" value="E"> Общаюсь с друзьями, ищу поддержку в социальном взаимодействии</label>
+                                <label><input type="radio" name="q5" value="C"> Составляю план действий, систематизирую задачи</label>
+                                <label><input type="radio" name="q5" value="O"> Погружаюсь в творчество или изучаю что-то новое</label>
+                                <label><input type="radio" name="q5" value="N"> Испытываю тревогу, могу стать раздражительным</label>
+                            </div>
+                        </div>
+                        
+                        <button class="btn" id="calculate-result">Узнать результат</button>
+                    </div>
+                    
+                    <div id="test-result" class="test-result">
+                        <h3 class="result-title">Ваш психологический профиль</h3>
+                        <div class="result-description" id="result-description">
+                            <!-- Результат будет добавлен сюда -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h2>Методы оценки личности</h2>
+                    <p>В современной психологии используется множество методов для оценки личности, каждый из которых имеет свои преимущества и ограничения.</p>
+                    
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>Стандартизированные тесты</h3>
+                            <p>Опросники, такие как MMPI, NEO-PI-R и 16PF, обеспечивают количественную оценку личностных черт на основе самоотчета.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Проективные методики</h3>
+                            <p>Тест Роршаха, ТАТ и другие проективные тесты позволяют оценить бессознательные аспекты личности через интерпретацию неоднозначных стимулов.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Поведенческое наблюдение</h3>
+                            <p>Систематическое наблюдение за поведением в естественных или лабораторных условиях provides valuable информацию о реальных поведенческих паттернах.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight">
+                        <p>Важно помнить, что ни один метод оценки личности не является совершенным. Наиболее точные результаты достигаются при использовании multiple методов и источников информации.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Психология<span>Личности</span></div>
+                <div class="footer-links">
+                    <a href="#" class="nav-link" data-page="home">Главная</a>
+                    <a href="#" class="nav-link" data-page="theory">Теории</a>
+                    <a href="#" class="nav-link" data-page="types">Типологии</a>
+                    <a href="#" class="nav-link" data-page="research">Исследования</a>
+                    <a href="#" class="nav-link" data-page="test">Тестирование</a>
+                </div>
+                <div class="copyright">© 2025 ПсихологияЛичности. Все права защищены.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Навигация между страницами
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const progressBar = document.getElementById('progressBar');
+            const calculateBtn = document.getElementById('calculate-result');
+            const testResult = document.getElementById('test-result');
+            const resultDescription = document.getElementById('result-description');
+            
+            // Функция переключения страниц
+            function switchPage(pageId) {
+                // Скрыть все страницы
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Показать выбранную страницу
+                document.getElementById(pageId).classList.add('active');
+                
+                // Обновить активную ссылку в навигации
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageId) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // Закрыть мобильное меню после выбора страницы
+                if (window.innerWidth <= 768) {
+                    mobileNav.classList.remove('active');
+                }
+                
+                // Прокрутить к верху страницы
+                window.scrollTo(0, 0);
+            }
+            
+            // Обработчики для навигационных ссылок
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    switchPage(pageId);
+                });
+            });
+            
+            // Обработчик для кнопки мобильного меню
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileNav.classList.toggle('active');
+            });
+            
+            // Закрытие мобильного меню при клике вне его
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.mobile-nav') && !e.target.closest('.mobile-menu-btn')) {
+                    mobileNav.classList.remove('active');
+                }
+            });
+            
+            // Обработчик изменения размера окна
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    mobileNav.classList.remove('active');
+                }
+            });
+            
+            // Прогресс бар при скролле
+            window.addEventListener('scroll', function() {
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight - windowHeight;
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const progress = (scrollTop / documentHeight) * 100;
+                progressBar.style.width = progress + '%';
+            });
+            
+            // Обработчик для теста
+            calculateBtn.addEventListener('click', function() {
+                const answers = {
+                    O: 0, // Openness
+                    C: 0, // Conscientiousness
+                    E: 0, // Extraversion
+                    A: 0, // Agreeableness
+                    N: 0  // Neuroticism
+                };
+                
+                // Собираем ответы
+                document.querySelectorAll('input[type="radio"]:checked').forEach(input => {
+                    answers[input.value]++;
+                });
+                
+                // Находим доминирующую черту
+                let maxCount = 0;
+                let dominantTrait = 'O';
+                
+                for (const trait in answers) {
+                    if (answers[trait] > maxCount) {
+                        maxCount = answers[trait];
+                        dominantTrait = trait;
+                    }
+                }
+                
+                // Устанавливаем результат
+                const traitDescriptions = {
+                    O: 'Вы обладаете высоким уровнем <strong>открытости опыту</strong>. Вам свойственны любознательность, широкий круг интересов и богатое воображение. Вы цените искусство, красоту и новые впечатления, легко адаптируетесь к изменениям и готовы рассматривать нестандартные идеи.',
+                    C: 'У вас выражена <strong>добросовестность</strong>. Вы организованы, ответственны и целеустремленны. Предпочитаете планировать свои действия, доводите начатое до конца и стремитесь к высоким результатам в любой деятельности.',
+                    E: 'Вы - <strong>экстраверт</strong>. Общительность, энергичность и позитивные эмоции характеризуют ваш стиль взаимодействия с миром. Вы черпаете энергию в социальных контактах, легко заводите новые знакомства и чувствуете себя комфортно в центре внимания.',
+                    A: 'Вам свойственна высокая <strong>доброжелательность</strong>. Вы отзывчивы, доверчивы и стремитесь к гармонии в отношениях. Склонны к сотрудничеству, умеете сопереживать и цените взаимопонимание с окружающими.',
+                    N: 'У вас наблюдается склонность к <strong>нейротизму</strong>. Вы эмоционально чувствительны, склонны к переживаниям и иногда испытываете трудности в управлении стрессом. Ваша эмоциональная глубина может быть источником творчества, но требует внимательного отношения к психологическому благополучию.'
+                };
+                
+                resultDescription.innerHTML = traitDescriptions[dominantTrait];
+                testResult.style.display = 'block';
+                testResult.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Инициализация графиков
+            initializeCharts();
+        });
+
+        function initializeCharts() {
+            // График для структуры личности по Фрейду
+            const freudCtx = document.getElementById('freudChart').getContext('2d');
+            new Chart(freudCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Ид (Бессознательное)', 'Эго (Сознание)', 'Суперэго (Мораль)'],
+                    datasets: [{
+                        data: [60, 30, 10],
+                        backgroundColor: [
+                            'rgba(255, 76, 141, 0.8)',
+                            'rgba(106, 76, 255, 0.8)',
+                            'rgba(76, 219, 255, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 76, 141, 1)',
+                            'rgba(106, 76, 255, 1)',
+                            'rgba(76, 219, 255, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#f0f0f5',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // График для пирамиды Маслоу
+            const maslowCtx = document.getElementById('maslowChart').getContext('2d');
+            new Chart(maslowCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Физиологические', 'Безопасность', 'Любовь/Принадлежность', 'Уважение', 'Самоактуализация'],
+                    datasets: [{
+                        label: 'Уровень потребностей',
+                        data: [95, 85, 70, 50, 20],
+                        backgroundColor: [
+                            'rgba(255, 76, 141, 0.7)',
+                            'rgba(255, 184, 76, 0.7)',
+                            'rgba(76, 219, 255, 0.7)',
+                            'rgba(106, 76, 255, 0.7)',
+                            'rgba(184, 76, 255, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 76, 141, 1)',
+                            'rgba(255, 184, 76, 1)',
+                            'rgba(76, 219, 255, 1)',
+                            'rgba(106, 76, 255, 1)',
+                            'rgba(184, 76, 255, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                color: '#f0f0f5'
+                            },
+                            grid: {
+                                color: 'rgba(255,255,255,0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#f0f0f5'
+                            },
+                            grid: {
+                                color: 'rgba(255,255,255,0.1)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#f0f0f5'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // График для Big Five
+            const bigFiveCtx = document.getElementById('bigFiveChart').getContext('2d');
+            new Chart(bigFiveCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Открытость', 'Добросовестность', 'Экстраверсия', 'Доброжелательность', 'Нейротизм'],
+                    datasets: [{
+                        label: 'Средние значения',
+                        data: [65, 70, 55, 75, 40],
+                        backgroundColor: 'rgba(106, 76, 255, 0.2)',
+                        borderColor: 'rgba(106, 76, 255, 1)',
+                        pointBackgroundColor: 'rgba(106, 76, 255, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(106, 76, 255, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(255,255,255,0.1)'
+                            },
+                            grid: {
+                                color: 'rgba(255,255,255,0.1)'
+                            },
+                            pointLabels: {
+                                color: '#f0f0f5'
+                            },
+                            ticks: {
+                                color: '#f0f0f5',
+                                backdropColor: 'transparent'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#f0f0f5'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // График для темпераментов
+            const temperamentCtx = document.getElementById('temperamentChart').getContext('2d');
+            new Chart(temperamentCtx, {
+                type: 'polarArea',
+                data: {
+                    labels: ['Сангвиник', 'Холерик', 'Флегматик', 'Меланхолик'],
+                    datasets: [{
+                        data: [25, 25, 25, 25],
+                        backgroundColor: [
+                            'rgba(255, 76, 141, 0.7)',
+                            'rgba(255, 184, 76, 0.7)',
+                            'rgba(76, 219, 255, 0.7)',
+                            'rgba(106, 76, 255, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 76, 141, 1)',
+                            'rgba(255, 184, 76, 1)',
+                            'rgba(76, 219, 255, 1)',
+                            'rgba(106, 76, 255, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#f0f0f5',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
